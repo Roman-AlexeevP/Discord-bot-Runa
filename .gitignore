@@ -1,0 +1,7 @@
+/venv/
+/bots_errors.log
+/dva.py
+/Discord_tags.db-wal
+/Discord_tags.db-shm
+/Discord_tags.db
+/config.json
