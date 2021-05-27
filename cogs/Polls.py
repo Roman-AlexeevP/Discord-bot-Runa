@@ -57,8 +57,7 @@ class Polls(commands.Cog):
     @commands.command(name="опросик")
     @commands.guild_only()
     async def quickpoll(self, ctx, *questions_and_choices: str):
-        """Makes a poll quickly.
-        The first argument is the question and the rest are the choices.
+        """Быстрое создание опросов: первый аргумент вопрос и остальные варианты ответов
         """
 
         if len(questions_and_choices) < 3:
@@ -75,6 +74,7 @@ class Polls(commands.Cog):
 
         try:
             await ctx.message.delete()
+
         except:
             pass
 

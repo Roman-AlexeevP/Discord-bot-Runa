@@ -1,8 +1,5 @@
-from discord.ext import commands, tasks
+from discord.ext import commands
 import discord
-
-
-
 
 
 class Admin(commands.Cog):
@@ -12,7 +9,6 @@ class Admin(commands.Cog):
 
     async def cog_check(self, ctx):
         return await self.bot.is_owner(ctx.author)
-
 
     @commands.command(hidden=True)
     async def load(self, ctx, *, module):
@@ -44,43 +40,45 @@ class Admin(commands.Cog):
         else:
             await ctx.send('\N{OK HAND SIGN}')
 
-    @commands.command("очистить")
+    @commands.command(name="очистить")
     @commands.is_owner()
     async def clear_messages(self, ctx, mgs_count: int):
+        """Удаляет n сообщений в текущем канале"""
         deleted = await ctx.message.channel.purge(limit=mgs_count + 1)
         await ctx.message.channel.send(f'Удалено {len(deleted)} сообщений', delete_after=3)
 
-    @commands.command("mute")
+    @commands.command(name="mute")
     @commands.is_owner()
     async def mute(self, ctx, member: discord.Member):
+        """Устанавливает запрет на отправку сообщений данному пользователю"""
         await ctx.message.channel.set_permissions(member, send_messages=False)
         await ctx.send(member.mention + ", Вы не можете отправлять сообщения на сервере!")
 
-    @commands.command("unmute")
+    @commands.command(name="unmute")
     @commands.is_owner()
     async def unmute(self, ctx, member: discord.Member):
+        """Снимает запрет на отправку сообщений данному пользователю"""
         await ctx.message.channel.set_permissions(member, send_messages=True)
         await ctx.send(member.mention + ", Вы можете отправлять сообщения на сервере c текущего момента.")
 
-    @commands.command("отключить")
+    @commands.command(name="отключить", hidden=True)
     @commands.is_owner()
     async def logout(self, ctx):
-        await ctx.send(f"Завершаю работу! Был онлайн в течение {round(self.bot.latency, 2)} секунд")
+        """Выключение бота аппаратно"""
+        await ctx.send(f"Завершаю работу!")
         self.bot.logout()
+        raise SystemExit(0)
 
     @commands.command()
     @commands.guild_only()
     @commands.is_owner()
     async def kick(self, ctx, member: discord.Member, *, reason=None):
-
+        """Удаление данного пользователя с сервера"""
         if reason is None:
             reason = f'Action done by {ctx.author} (ID: {ctx.author.id})'
 
         await ctx.guild.kick(member, reason=reason)
         await ctx.send('\N{OK HAND SIGN}')
-
-
-
 
 
 def setup(bot):

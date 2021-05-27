@@ -1,13 +1,7 @@
-from discord.ext import commands, tasks
+from discord.ext import commands
 import discord
 from Utilities import BaseModel
 from playhouse.sqlite_ext import *
-import logging
-
-logging.basicConfig(filename='bots_errors.log', level=logging.ERROR)
-logger = logging.getLogger('peewee')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.ERROR)
 
 
 class MemberRoles(commands.MemberConverter):
@@ -66,7 +60,7 @@ class Utils(commands.Cog):
 
     @commands.command(name="роль")
     @commands.has_permissions(manage_roles=True)
-    async def give_role(self, ctx, role: str):
+    async def give_role(self, ctx, *, role: str):
         def check(msg):
             return ctx.channel == msg.channel and msg.author == ctx.author
 
