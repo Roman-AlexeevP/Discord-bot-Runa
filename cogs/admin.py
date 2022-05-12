@@ -44,8 +44,8 @@ class Admin(commands.Cog):
     @commands.is_owner()
     async def clear_messages(self, ctx, mgs_count: int):
         """Удаляет n сообщений в текущем канале"""
-        deleted = await ctx.message.channel.purge(limit=mgs_count + 1)
-        await ctx.message.channel.send(f'Удалено {len(deleted)} сообщений', delete_after=3)
+        deleted_messages = await ctx.message.channel.purge(limit=mgs_count + 1)
+        await ctx.message.channel.send(f'Удалено {len(deleted_messages)} сообщений', delete_after=3)
 
     @commands.command(name="mute")
     @commands.is_owner()
